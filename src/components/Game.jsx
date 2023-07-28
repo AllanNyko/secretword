@@ -1,36 +1,51 @@
 
-import React from 'react';
+import React, { useState, useRef } from 'react';
 import './Game.css'
 
-const Game = ({ verifyLetters }) => {
+const Game = ({ verifyLetters, wrongLetters,
+	pickedCategory, guessedLetters, guesses,
+	letters, pickedWord, score }) => {
+	const letterIputRef = useRef(null)
+	const [letter, setLetter] = useState('');
+
+	const handleSubmit = (e) => {
+		e.preventDefault();
+		verifyLetters(letter)
+		setLetter('')
+		letterIputRef.current.focus()
+	}
+
+
 	return (
 
 		<div className="name">
-			<p className="points"><span>Pontuação: </span>	</p>
+			<p className="points"><span>Pontuação: {score}</span>	</p>
 			<h1>Adivinhe a palavra</h1>
-			<h3 className="tip"> Dica sobre a palavra: <span>Dica: ...</span>
+			<h3 className="tip"> Dica sobre a palavra: <span>Dica: {pickedCategory.toUpperCase()}</span>
 			</h3>
-			<p>Você ainda tem xxx tentativas.</p>
+			<p>Você ainda tem {guesses} tentativas.</p>
 			<div className="wordContainer">
-				<span className="letter">
-					A
-				</span>
-				<span className="blankSquare">
+				{
+					letters.map((l, i) => guessedLetters.includes(l) ?
+						<span key={i} className="letter">{l}</span> : <span key={i} className="blankSquare"></span>)
+				}
 
-				</span>
 			</div>
 			<div className="letterContainer">
-				<p>Tente Advinhar a letra</p>
-				<form >
-					<input type="text" name="letter" maxLength={1} required />
-					<button onClick={''}>Jogar</button>
+				<p>Tente advinhar uma a letra da palavra</p>
+				<form onSubmit={handleSubmit}>
+					<input type="text" name="letter" maxLength={1}
+						onChange={(e) => setLetter(e.target.value)} 
+						value={letter} required ref={letterIputRef} />
+					<button onClick={console.log()}>Jogar</button>
 
 				</form>
 			</div>
 			<div className="wrongLettersContainer">
 				<p>Letras já utilizadas</p>
-				<span>a,</span>
-				<span>b,</span>
+				{
+					wrongLetters.map((l, i) => <span key={i} >{l}</span>)
+				}
 			</div>
 			<button onClick={verifyLetters}>Desistir do Game</button>
 		</div>

@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState } from 'react';
+import { useCallback, useEffect, useState, useRef } from 'react';
 import { wordsList } from './data/words';
 import './App.css';
 
@@ -17,7 +17,7 @@ const App = () => {
   const [wrongLetters, setWrongLetters] = useState([])
   const [guesses, setGuesses] = useState(3)
   const [score, setScore] = useState(0)
-
+  
 
 
   const pickWordAndCategory = () => {
@@ -42,7 +42,10 @@ const App = () => {
     setGameStage(stages[1].name)
   }
 
-  const verifyLetters = () => { setGameStage(stages[2].name) }
+  const verifyLetters = (letter) => {
+    console.log(letter)
+
+  }
   const retry = () => { setGameStage(stages[0].name) }
 
 
