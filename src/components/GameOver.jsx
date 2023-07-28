@@ -1,11 +1,15 @@
 import React from 'react';
 import './GameOver.css'
 
-const GameOver = () => {
+const GameOver = ({retry}) => {
 	return (
 		<div>
-			Game Over
-		</div>
+		<h1>
+			Fim de Jogo.
+		</h1>
+		<button onClick={retry}>Jogar novamente</button>
+
+	</div>
 	);
 };
 
